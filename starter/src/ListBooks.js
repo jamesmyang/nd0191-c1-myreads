@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Book from "./Book";
 import BookShelf from "./BookShelf";
 
 const ListBooks = () => {
 
-
-
-
-
   const book = {
     title: "Ender's Game",
-    authors: ["Orson Scott Card"],
+    authors: ["Orson Scott Card", "unknown 1", "unknown 2"],
     imageLinks: {
       smallThumbnail: "http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api",
       thumbnail: "http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api"
@@ -81,7 +76,6 @@ const ListBooks = () => {
 
   useEffect(() => {
     let books = [book, book11, book12, book21, book22, book23];
-
     resort(books);
   }, []);
 
