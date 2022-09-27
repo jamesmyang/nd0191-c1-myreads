@@ -1,6 +1,10 @@
-import Book from "./Book"
+import { Link } from "react-router-dom";
+import Book from "./Book";
+import BookShelf from "./BookShelf";
 
-const ListBooks = ({ handleShowSearchpage }) => {
+const ListBooks = () => {
+
+
 
 
 
@@ -70,65 +74,30 @@ const ListBooks = ({ handleShowSearchpage }) => {
     shelf: "read"
   }
 
-
+  {/**const books = [book, book11, book12, book21, book22, book23];*/ }
 
   return (
     <div className="list-books">
-
+      {/** book title */}
       <div className="list-books-title">
         <h1>MyReads</h1>
       </div>
 
+      {/** book content */}
       <div className="list-books-content">
         <div>
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Currently Reading</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                <li >
-                  <Book book={book} />
-                </li>
-              </ol>
-            </div>
-          </div>
-
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Want to Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                <li>
-                  <Book book={book11} />
-                </li>
-                <li>
-                  <Book book={book12} />
-                </li>
-              </ol>
-            </div>
-          </div>
-
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Read</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                <li>
-                  <Book book={book21} />
-                </li>
-                <li>
-                  <Book book={book22} />
-                </li>
-                <li>
-                  <Book book={book23} />
-                </li>
-              </ol>
-            </div>
-          </div>
+          <BookShelf title={"Currently Reading"} books={[book]} />
+          <BookShelf title={"Want to Read"} books={[book11, book12]} />
+          <BookShelf title={"Read"} books={[book21, book22, book23]} />
         </div>
       </div>
 
+      {/** book search */}
       <div className="open-search">
-        <a onClick={handleShowSearchpage}>Add a book</a>
+        <Link to="/search" >
+          Add a book
+        </Link>
       </div>
-
     </div>
   );
 }
