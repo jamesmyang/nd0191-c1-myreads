@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Book from "./Book";
 import BookShelf from "./BookShelf";
@@ -74,7 +75,31 @@ const ListBooks = () => {
     shelf: "read"
   }
 
-  {/**const books = [book, book11, book12, book21, book22, book23];*/ }
+  const [reading, setReading] = useState([]);
+  const [want, setWant] = useState([]);
+  const [read, setRead] = useState([]);
+
+  useEffect(() => {
+    let books = [book, book11, book12, book21, book22, book23];
+
+    resort(books);
+  }, []);
+
+  const handleMove = (book, shelf) => {
+    /**
+     * update server for book
+     */
+
+    book.shelf = shelf;
+
+    resort(reading.concat(want).concat(read));
+  };
+
+  const resort = (books) => {
+    setReading(books.filter(book => book.shelf === "currentlyReading"));
+    setWant(books.filter(book => book.shelf === "wantToRead"));
+    setRead(books.filter(book => book.shelf === "read"));
+  }
 
   return (
     <div className="list-books">
@@ -86,9 +111,9 @@ const ListBooks = () => {
       {/** book content */}
       <div className="list-books-content">
         <div>
-          <BookShelf title={"Currently Reading"} books={[book]} />
-          <BookShelf title={"Want to Read"} books={[book11, book12]} />
-          <BookShelf title={"Read"} books={[book21, book22, book23]} />
+          <BookShelf title={"Currently Reading"} books={reading} handleMove={handleMove} />
+          <BookShelf title={"Want to Read"} books={want} handleMove={handleMove} />
+          <BookShelf title={"Read"} books={read} handleMove={handleMove} />
         </div>
       </div>
 
