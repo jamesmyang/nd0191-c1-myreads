@@ -30,7 +30,9 @@ const Book = ({ book, handleMove }) => {
       <div className="book-title">{book.title}</div>
       <div className="book-authors">
         {
-          book.authors.map((author, index) => <div key={index}>{author}</div>)
+          book.authors.map((author, index) => (
+            <div key={index}>{author}</div>
+          ))
         }
       </div>
     </div >
