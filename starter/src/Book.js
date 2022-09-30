@@ -1,4 +1,5 @@
 const Book = ({ book, handleMove }) => {
+  console.log(book);
 
   const handleChange = (event) => {
     handleMove(book, event.target.value);
@@ -19,7 +20,7 @@ const Book = ({ book, handleMove }) => {
         </div>
         <div className="book-shelf-changer">
           <select value={book.shelf} onChange={handleChange}>
-            <option value="none" disabled>Move to...</option>
+            <option disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
             <option value="read">Read</option>
@@ -30,9 +31,11 @@ const Book = ({ book, handleMove }) => {
       <div className="book-title">{book.title}</div>
       <div className="book-authors">
         {
-          book.authors.map((author, index) => (
-            <div key={index}>{author}</div>
-          ))
+          book.authors !== undefined ?
+            book.authors.map((author, index) => (
+              <div key={index}>{author}</div>
+            )) :
+            <div></div>
         }
       </div>
     </div >

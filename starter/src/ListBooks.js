@@ -32,7 +32,7 @@ const ListBooks = () => {
     book.shelf = shelf;
 
     const update = async () => {
-      const res = await BooksAPI.update(book, shelf);
+      await BooksAPI.update(book, shelf);
     }
 
     update();
