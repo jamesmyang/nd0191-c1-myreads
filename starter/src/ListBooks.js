@@ -12,7 +12,7 @@ const ListBooks = () => {
     let mounted = true;
 
     const getBooks = async () => {
-      const books = await BooksAPI.getAll();
+      const books = await BooksAPI.getAll();      
 
       if (books) {
         if (mounted) {

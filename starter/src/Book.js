@@ -1,5 +1,4 @@
 const Book = ({ book, handleMove }) => {
-  console.log(book);
 
   const handleChange = (event) => {
     handleMove(book, event.target.value);

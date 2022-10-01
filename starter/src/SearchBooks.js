@@ -1,39 +1,29 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import * as BooksAPI from "./BooksAPI";
 import BooksGrid from "./BooksGrid";
+import * as BooksAPI from "./BooksAPI";
 
 const SearchBooks = () => {
   const [books, setBooks] = useState([]);
   const [query, setQuery] = useState("");
 
-  const handleMove = (book, shelf) => {
-    book.shelf = shelf;
-
-    const update = async () => {
-      await BooksAPI.update(book, shelf);
-    }
-
-    update();
-    setBooks([...books]);
-  };
-
   useEffect(() => {
     let mounted = true;
 
     const searchBooks = async () => {
-      console.log(query.trim().toLowerCase());
-      const books = await BooksAPI.search(query.trim().toLowerCase());
+      const finalResults = [await BooksAPI.getAll(), await BooksAPI.search(query.trim().toLowerCase())];
 
-      if (books) {
-        console.log(books);
+      if (finalResults) {
         if (mounted) {
-          books.length > 0 ?
-            setBooks(books.filter((book) => book.imageLinks !== undefined)) :
+          if (finalResults[1].error !== undefined || !Array.isArray(finalResults[1])) {
             setBooks([]);
+          } else {
+            let filtered = finalResults[1].filter((book) => book.imageLinks !== undefined);
+            setBooks(attachShelf(filtered, finalResults[0]));
+          }
         }
       }
-    };
+    }
 
     if (query.trim() === "") {
       setBooks([]);
@@ -46,8 +36,32 @@ const SearchBooks = () => {
     });
   }, [query]);
 
+  const attachShelf = (books, myReads) => {
+    return books.map((book) => {
+      let shelf = "none";
+      for (let myRead of myReads) {
+        if (myRead.id === book.id) {
+          shelf = myRead.shelf;
+          break;
+        }
+      }
+      return { ...book, shelf: shelf };
+    });
+  };
+
   const handleSearch = (query) => {
     setQuery(query);
+  };
+
+  const handleMove = (book, shelf) => {
+    book.shelf = shelf;
+
+    const update = async () => {
+      await BooksAPI.update(book, shelf);
+    }
+
+    update();
+    setBooks([...books]);
   };
 
   return (
@@ -69,7 +83,6 @@ const SearchBooks = () => {
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid"></ol>
         <BooksGrid books={books} handleMove={handleMove} />
       </div>
     </div>
