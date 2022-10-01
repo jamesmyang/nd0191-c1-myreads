@@ -4,19 +4,17 @@ import BookShelf from "./BookShelf";
 import * as BooksAPI from "./BooksAPI";
 
 const ListBooks = () => {
-  const [reading, setReading] = useState([]);
-  const [want, setWant] = useState([]);
-  const [read, setRead] = useState([]);
+  const [myReads, setMyReads] = useState([]);
 
   useEffect(() => {
     let mounted = true;
 
     const getBooks = async () => {
-      const books = await BooksAPI.getAll();      
+      const books = await BooksAPI.getAll();
 
       if (books) {
         if (mounted) {
-          resort(books);
+          setMyReads(books);
         }
       }
     };
@@ -36,14 +34,8 @@ const ListBooks = () => {
     }
 
     update();
-    resort(reading.concat(want).concat(read));
+    setMyReads([...myReads]);
   };
-
-  const resort = (books) => {
-    setReading(books.filter(book => book.imageLinks.thumbnail !== undefined && book.shelf === "currentlyReading"));
-    setWant(books.filter(book => book.imageLinks.thumbnail !== undefined && book.shelf === "wantToRead"));
-    setRead(books.filter(book => book.imageLinks.thumbnail !== undefined && book.shelf === "read"));
-  }
 
   return (
     <div className="list-books">
@@ -55,9 +47,18 @@ const ListBooks = () => {
       {/** book content */}
       <div className="list-books-content">
         <div>
-          <BookShelf title={"Currently Reading"} books={reading} handleMove={handleMove} />
-          <BookShelf title={"Want to Read"} books={want} handleMove={handleMove} />
-          <BookShelf title={"Read"} books={read} handleMove={handleMove} />
+          <BookShelf
+            title={"Currently Reading"}
+            books={myReads.filter(book => book.shelf === "currentlyReading")}
+            handleMove={handleMove} />
+          <BookShelf
+            title={"Want to Read"}
+            books={myReads.filter(book => book.shelf === "wantToRead")}
+            handleMove={handleMove} />
+          <BookShelf
+            title={"Read"}
+            books={myReads.filter(book => book.shelf === "read")}
+            handleMove={handleMove} />
         </div>
       </div>
 
