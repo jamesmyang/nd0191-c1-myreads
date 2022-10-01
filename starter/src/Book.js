@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 const Book = ({ book, handleMove }) => {
 
   const handleChange = (event) => {
@@ -40,5 +42,10 @@ const Book = ({ book, handleMove }) => {
     </div >
   );
 }
+
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  handleMove: PropTypes.func.isRequired,
+};
 
 export default Book;

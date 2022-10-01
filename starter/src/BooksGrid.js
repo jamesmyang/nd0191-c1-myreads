@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import Book from "./Book";
 
 const BooksGrid = ({ books, handleMove }) => {
@@ -12,6 +13,11 @@ const BooksGrid = ({ books, handleMove }) => {
       }
     </ol>
   );
+};
+
+BooksGrid.propTypes = {
+  books: PropTypes.array.isRequired,
+  handleMove: PropTypes.func.isRequired,
 };
 
 export default BooksGrid;
