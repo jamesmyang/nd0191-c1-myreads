@@ -38,35 +38,37 @@ const ListBooks = () => {
   };
 
   return (
-    <div className="list-books">
-      {/** book title */}
-      <div className="list-books-title">
-        <h1>MyReads</h1>
-      </div>
-
-      {/** book content */}
-      <div className="list-books-content">
-        <div>
-          <BookShelf
-            title={"Currently Reading"}
-            books={myReads.filter(book => book.shelf === "currentlyReading")}
-            handleMove={handleMove} />
-          <BookShelf
-            title={"Want to Read"}
-            books={myReads.filter(book => book.shelf === "wantToRead")}
-            handleMove={handleMove} />
-          <BookShelf
-            title={"Read"}
-            books={myReads.filter(book => book.shelf === "read")}
-            handleMove={handleMove} />
+    <div className="app">
+      <div className="list-books">
+        {/** book title */}
+        <div className="list-books-title">
+          <h1>MyReads</h1>
         </div>
-      </div>
 
-      {/** book search */}
-      <div className="open-search">
-        <Link to="/search" >
-          Add a book
-        </Link>
+        {/** book content */}
+        <div className="list-books-content">
+          <div>
+            <BookShelf
+              title={"Currently Reading"}
+              books={myReads.filter(book => book.shelf === "currentlyReading")}
+              handleMove={handleMove} />
+            <BookShelf
+              title={"Want to Read"}
+              books={myReads.filter(book => book.shelf === "wantToRead")}
+              handleMove={handleMove} />
+            <BookShelf
+              title={"Read"}
+              books={myReads.filter(book => book.shelf === "read")}
+              handleMove={handleMove} />
+          </div>
+        </div>
+
+        {/** book search */}
+        <div className="open-search">
+          <Link to="/search" >
+            Add a book
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -65,25 +65,27 @@ const SearchBooks = () => {
   };
 
   return (
-    <div className="search-books">
-      <div className="search-books-bar">
-        <Link
-          to="/"
-          className="close-search"
-        >
-          Close
-        </Link>
-        <div className="search-books-input-wrapper">
-          <input
-            type="text"
-            placeholder="Search by title, author, or ISBN"
-            value={query}
-            onChange={(event) => handleSearch(event.target.value)}
-          />
+    <div className="app">
+      <div className="search-books">
+        <div className="search-books-bar">
+          <Link
+            to="/"
+            className="close-search"
+          >
+            Close
+          </Link>
+          <div className="search-books-input-wrapper">
+            <input
+              type="text"
+              placeholder="Search by title, author, or ISBN"
+              value={query}
+              onChange={(event) => handleSearch(event.target.value)}
+            />
+          </div>
         </div>
-      </div>
-      <div className="search-books-results">
-        <BooksGrid books={books} handleMove={handleMove} />
+        <div className="search-books-results">
+          <BooksGrid books={books} handleMove={handleMove} />
+        </div>
       </div>
     </div>
   );

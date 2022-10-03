@@ -6,23 +6,21 @@ import SearchBooks from "./SearchBooks";
 function App() {
 
   return (
-    <div className="app">
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <ListBooks />
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            <SearchBooks />
-          }
-        />
-      </Routes>
-    </div >
+    <Routes>
+      <Route
+        exact
+        path="/"
+        element={
+          <ListBooks />
+        }
+      />
+      <Route
+        path="/search"
+        element={
+          <SearchBooks />
+        }
+      />
+    </Routes>
   );
 }
 
