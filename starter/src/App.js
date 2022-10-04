@@ -14,9 +14,17 @@ function App() {
 
     book.shelf = shelf;
     if (includes(books, book)) {
-      setBooks([...books]);
+      if (shelf === undefined || shelf === "none") {
+        setBooks(books.filter((bk) => (bk.id !== book.id)));
+      } else {
+        setBooks([...books]);
+      }
     } else {
-      setBooks([...books, book]);
+      if (shelf === undefined || shelf === "none") {
+        setBooks([...books]);
+      } else {
+        setBooks([...books, book]);
+      }
     }
   };
 
