@@ -64,4 +64,9 @@ const SearchBooks = ({ booksOnShelf, moveBook }) => {
   );
 }
 
+SearchBooks.propTypes = {
+  booksOnShelf: PropTypes.array.isRequired,
+  moveBook: PropTypes.func.isRequired,
+};
+
 export default SearchBooks;

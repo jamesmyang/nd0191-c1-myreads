@@ -51,6 +51,7 @@ const ListBooks = ({ books, setBooks, moveBook }) => {
 
 ListBooks.propTypes = {
   books: PropTypes.array.isRequired,
+  setBooks: PropTypes.func.isRequired,
   moveBook: PropTypes.func.isRequired,
 };
 
