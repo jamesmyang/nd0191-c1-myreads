@@ -1,9 +1,9 @@
 import PropTypes from "prop-types"
 
-const Book = ({ book, handleMove }) => {
+const Book = ({ book, moveBook }) => {
 
   const handleChange = (event) => {
-    handleMove(book, event.target.value);
+    moveBook(book, event.target.value);
   };
 
   return (
@@ -45,7 +45,7 @@ const Book = ({ book, handleMove }) => {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  handleMove: PropTypes.func.isRequired,
+  moveBook: PropTypes.func.isRequired,
 };
 
 export default Book;

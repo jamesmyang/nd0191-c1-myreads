@@ -1,67 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import BooksGrid from "./BooksGrid";
 import * as BooksAPI from "./BooksAPI";
 
-const SearchBooks = () => {
-  const [books, setBooks] = useState([]);
+const SearchBooks = ({ booksOnShelf, moveBook }) => {
   const [query, setQuery] = useState("");
+  const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    let mounted = true;
+  const handleSearch = (query) => {
+    setQuery(query);
 
-    const searchBooks = async () => {
-      const finalResults = [await BooksAPI.getAll(), await BooksAPI.search(query.trim().toLowerCase())];
-
-      if (finalResults) {
-        if (mounted) {
-          if (finalResults[1].error !== undefined || !Array.isArray(finalResults[1])) {
-            setBooks([]);
-          } else {
-            let filtered = finalResults[1].filter((book) => book.imageLinks !== undefined);
-            setBooks(attachShelf(filtered, finalResults[0]));
-          }
-        }
-      }
-    }
-
-    if (query.trim() === "") {
+    if (query === undefined || query.trim().length === 0) {
       setBooks([]);
     } else {
-      searchBooks();
+      BooksAPI.search(query.trim().toLowerCase()).then((foundBooks) => {
+        if (foundBooks.error !== undefined || !Array.isArray(foundBooks)) {
+          setBooks([]);
+        } else {
+          let filtered = foundBooks.filter((book) => book.imageLinks !== undefined);
+          setBooks(attachShelf(filtered, booksOnShelf));
+        }
+      });
     }
+  };
 
-    return (() => {
-      mounted = false;
-    });
-  }, [query]);
-
-  const attachShelf = (books, myReads) => {
+  const attachShelf = (books, booksOnShelf) => {
     return books.map((book) => {
       let shelf = "none";
-      for (let myRead of myReads) {
-        if (myRead.id === book.id) {
-          shelf = myRead.shelf;
+      for (let bookOnShelf of booksOnShelf) {
+        if (bookOnShelf.id === book.id) {
+          shelf = bookOnShelf.shelf;
           break;
         }
       }
       return { ...book, shelf: shelf };
     });
-  };
-
-  const handleSearch = (query) => {
-    setQuery(query);
-  };
-
-  const handleMove = (book, shelf) => {
-    book.shelf = shelf;
-
-    const update = async () => {
-      await BooksAPI.update(book, shelf);
-    }
-
-    update();
-    setBooks([...books]);
   };
 
   return (
@@ -84,7 +57,7 @@ const SearchBooks = () => {
           </div>
         </div>
         <div className="search-books-results">
-          <BooksGrid books={books} handleMove={handleMove} />
+          <BooksGrid books={books} moveBook={moveBook} />
         </div>
       </div>
     </div>

@@ -1,14 +1,14 @@
 import PropTypes from "prop-types"
 import Book from "./Book";
 
-const BooksGrid = ({ books, handleMove }) => {
+const BooksGrid = ({ books, moveBook }) => {
 
   return (
     <ol className="books-grid">
       {
         books.length === 0 ? "Not found" :
           books.map((book, index) => (
-            <li key={index}> <Book book={book} handleMove={handleMove} /> </li>
+            <li key={index}> <Book book={book} moveBook={moveBook} /> </li>
           ))
       }
     </ol>
@@ -17,7 +17,7 @@ const BooksGrid = ({ books, handleMove }) => {
 
 BooksGrid.propTypes = {
   books: PropTypes.array.isRequired,
-  handleMove: PropTypes.func.isRequired,
+  moveBook: PropTypes.func.isRequired,
 };
 
 export default BooksGrid;

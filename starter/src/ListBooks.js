@@ -1,41 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import BookShelf from "./BookShelf";
 import * as BooksAPI from "./BooksAPI";
 
-const ListBooks = () => {
-  const [myReads, setMyReads] = useState([]);
+const ListBooks = ({ books, setBooks, moveBook }) => {
 
   useEffect(() => {
-    let mounted = true;
-
-    const getBooks = async () => {
-      const books = await BooksAPI.getAll();
-
-      if (books) {
-        if (mounted) {
-          setMyReads(books);
-        }
-      }
-    };
-
-    getBooks();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  const handleMove = (book, shelf) => {
-    book.shelf = shelf;
-
-    const update = async () => {
-      await BooksAPI.update(book, shelf);
-    }
-
-    update();
-    setMyReads([...myReads]);
-  };
+    BooksAPI.getAll().then((books) => {
+      setBooks(books);
+    });
+  }, [setBooks]);
 
   return (
     <div className="app">
@@ -50,16 +25,16 @@ const ListBooks = () => {
           <div>
             <BookShelf
               title={"Currently Reading"}
-              books={myReads.filter(book => book.shelf === "currentlyReading")}
-              handleMove={handleMove} />
+              books={books.filter(book => book.shelf === "currentlyReading")}
+              moveBook={moveBook} />
             <BookShelf
               title={"Want to Read"}
-              books={myReads.filter(book => book.shelf === "wantToRead")}
-              handleMove={handleMove} />
+              books={books.filter(book => book.shelf === "wantToRead")}
+              moveBook={moveBook} />
             <BookShelf
               title={"Read"}
-              books={myReads.filter(book => book.shelf === "read")}
-              handleMove={handleMove} />
+              books={books.filter(book => book.shelf === "read")}
+              moveBook={moveBook} />
           </div>
         </div>
 
@@ -73,5 +48,10 @@ const ListBooks = () => {
     </div>
   );
 }
+
+ListBooks.propTypes = {
+  books: PropTypes.array.isRequired,
+  moveBook: PropTypes.func.isRequired,
+};
 
 export default ListBooks;
